@@ -1,0 +1,2311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSD Canteen - Indian Defense Services Subsidized Portal</title>
+    <!-- FontAwesome for Icons (No Emojis) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --navy-primary: #0A1128;
+            --navy-secondary: #101F42;
+            --navy-light: #1E3A8A;
+            --olive-accent: #2D4A22;
+            --olive-hover: #1E3317;
+            --khaki-light: #F4F1EA;
+            --gold-primary: #C59B27;
+            --gold-bright: #F59E0B;
+            --gold-soft: #FEF3C7;
+            --saffron: #FF9933;
+            --white: #FFFFFF;
+            --bg-light: #F8FAFC;
+            --text-dark: #0F172A;
+            --text-muted: #64748B;
+            --border-color: #E2E8F0;
+            --danger: #DC2626;
+            --success: #16A34A;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            --radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Utility & Typography */
+        .font-cinzel { font-family: 'Cinzel', serif; }
+        .text-gold { color: var(--gold-bright); }
+        .bg-gold { background-color: var(--gold-primary); }
+        .text-olive { color: var(--olive-accent); }
+        .bg-olive { background-color: var(--olive-accent); }
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .badge-olive { background-color: #E8F0E6; color: var(--olive-accent); border: 1px solid #C2D6BE; }
+        .badge-gold { background-color: var(--gold-soft); color: #B45309; border: 1px solid #FDE68A; }
+        .badge-navy { background-color: #E2E8F0; color: var(--navy-primary); }
+        .badge-saffron { background-color: #FFF7ED; color: #C2410C; border: 1px solid #FFEDD5; }
+
+        /* BUTTONS */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            font-weight: 600;
+            border-radius: var(--radius);
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            font-size: 0.88rem;
+        }
+        .btn-primary {
+            background-color: var(--olive-accent);
+            color: var(--white);
+        }
+        .btn-primary:hover {
+            background-color: var(--olive-hover);
+        }
+        .btn-gold {
+            background-color: var(--gold-primary);
+            color: var(--white);
+        }
+        .btn-gold:hover {
+            background-color: #B2881D;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-dark);
+        }
+        .btn-outline:hover {
+            background-color: #F1F5F9;
+        }
+        .btn-sm {
+            padding: 0.35rem 0.75rem;
+            font-size: 0.8rem;
+        }
+
+        /* Flag Graphic */
+        .flag-icon {
+            width: 28px;
+            height: 18px;
+            border-radius: 2px;
+            box-shadow: 0 0 2px rgba(0,0,0,0.3);
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        /* -------------------------------------------------------------
+           1. AUTHENTICATION / LOGIN VIEW
+        ------------------------------------------------------------- */
+        #auth-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(10, 17, 40, 0.96), rgba(16, 31, 66, 0.97)),
+                        url('https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=1600&q=80') center/cover;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        
+        .auth-card {
+            background-color: var(--white);
+            width: 100%;
+            max-width: 480px;
+            border-radius: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+            border: 2px solid var(--gold-primary);
+        }
+
+        .auth-header {
+            background-color: var(--navy-primary);
+            color: var(--white);
+            padding: 2rem 1.5rem 1.5rem;
+            text-align: center;
+            position: relative;
+            border-bottom: 3px solid var(--gold-primary);
+        }
+
+        .auth-logo-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .auth-header h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+            color: var(--gold-bright);
+        }
+
+        .auth-header p {
+            font-size: 0.8rem;
+            color: #94A3B8;
+            margin-top: 0.25rem;
+        }
+
+        .auth-body {
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--navy-primary);
+            margin-bottom: 0.4rem;
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
+            border-color: var(--navy-primary);
+            box-shadow: 0 0 0 3px rgba(10, 17, 40, 0.1);
+        }
+
+        .otp-inputs {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+        }
+
+        .otp-digit {
+            width: 52px;
+            height: 52px;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: 700;
+            padding: 0;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+        }
+
+        .otp-digit:focus {
+            border-color: var(--gold-primary);
+            box-shadow: 0 0 0 3px rgba(197, 155, 39, 0.2);
+        }
+
+        .auth-footer {
+            background-color: var(--khaki-light);
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* -------------------------------------------------------------
+           2. MAIN APPLICATION HEADER & NAV
+        ------------------------------------------------------------- */
+        .top-bar {
+            background-color: var(--navy-primary);
+            color: var(--white);
+            padding: 0.5rem 2rem;
+            font-size: 0.8rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .top-bar-notice {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: #E2E8F0;
+        }
+
+        .top-bar-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .top-bar-links a {
+            color: #94A3B8;
+            text-decoration: none;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .top-bar-links a:hover {
+            color: var(--white);
+        }
+
+        /* MAIN HEADER */
+        header.main-header {
+            background-color: var(--navy-secondary);
+            color: var(--white);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-md);
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            text-decoration: none;
+            color: var(--white);
+        }
+
+        .emblem-svg {
+            width: 44px;
+            height: 44px;
+        }
+
+        .brand-text h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.35rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            color: var(--white);
+            line-height: 1.1;
+        }
+
+        .brand-text span {
+            font-size: 0.68rem;
+            color: var(--gold-bright);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        /* Canteen Location Trigger */
+        .canteen-selector-trigger {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: all 0.2s;
+        }
+
+        .canteen-selector-trigger:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--gold-bright);
+        }
+
+        .canteen-info-text small {
+            display: block;
+            font-size: 0.65rem;
+            color: #94A3B8;
+            text-transform: uppercase;
+        }
+
+        .canteen-info-text strong {
+            font-size: 0.85rem;
+            color: var(--gold-bright);
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        /* Search Bar */
+        .search-box {
+            flex: 1;
+            max-width: 480px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.65rem 1rem 0.65rem 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--white);
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .search-box input::placeholder {
+            color: #94A3B8;
+        }
+
+        .search-box input:focus {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--gold-bright);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94A3B8;
+        }
+
+        /* User Profile & Cart */
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .user-badge-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.35rem 0.75rem 0.35rem 0.35rem;
+            border-radius: 30px;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: var(--gold-primary);
+            color: var(--navy-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.8rem;
+        }
+
+        .user-details span {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .user-details small {
+            display: block;
+            font-size: 0.65rem;
+            color: var(--gold-bright);
+        }
+
+        .cart-trigger {
+            position: relative;
+            background: rgba(255,255,255,0.08);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .cart-trigger:hover {
+            background: rgba(255,255,255,0.18);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background-color: var(--gold-bright);
+            color: var(--navy-primary);
+            font-size: 0.7rem;
+            font-weight: 800;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* CATEGORY NAVIGATION BANNER */
+        .category-bar {
+            background-color: var(--navy-primary);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 0 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+
+        .category-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            white-space: nowrap;
+            scrollbar-width: none;
+        }
+
+        .category-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .cat-item {
+            padding: 0.85rem 1.25rem;
+            color: #CBD5E1;
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .cat-item:hover, .cat-item.active {
+            color: var(--gold-bright);
+            border-bottom-color: var(--gold-bright);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        /* -------------------------------------------------------------
+           3. MAIN CONTENT CONTAINER
+        ------------------------------------------------------------- */
+        .main-layout {
+            max-width: 1400px;
+            margin: 1.5rem auto;
+            padding: 0 1.5rem;
+            width: 100%;
+            flex: 1;
+        }
+
+        /* Canteen Info Banner */
+        .canteen-status-banner {
+            background: linear-gradient(90deg, var(--navy-secondary) 0%, #1E3A8A 100%);
+            border-radius: var(--radius);
+            color: var(--white);
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            border-left: 5px solid var(--gold-bright);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .banner-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .banner-meta-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--gold-bright);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .banner-meta-details h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .banner-meta-details p {
+            font-size: 0.8rem;
+            color: #94A3B8;
+        }
+
+        .banner-stats {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .stat-chip {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 0.5rem 0.85rem;
+            border-radius: var(--radius);
+            font-size: 0.78rem;
+        }
+
+        .stat-chip span {
+            color: #94A3B8;
+            display: block;
+        }
+
+        .stat-chip strong {
+            color: var(--white);
+            font-size: 0.9rem;
+        }
+
+        /* QUOTA ELIGIBILITY TRACKER */
+        .quota-tracker-card {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .tracker-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tracker-header h4 {
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--navy-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quota-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .quota-box {
+            background-color: var(--bg-light);
+            border: 1px solid #E2E8F0;
+            border-radius: var(--radius);
+            padding: 1rem;
+        }
+
+        .quota-title {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-bar-bg {
+            height: 8px;
+            background-color: #CBD5E1;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background-color: var(--olive-accent);
+            border-radius: 4px;
+        }
+
+        .quota-note {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* DEDICATED CATEGORY SECTIONS & CARDS */
+        .category-section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 2.5rem 0 1.25rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .category-section-title h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.25rem;
+            color: var(--navy-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .product-card {
+            background-color: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .product-tag {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 2;
+        }
+
+        .product-img-wrap {
+            height: 200px;
+            background-color: #F8FAFC;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            position: relative;
+            border-bottom: 1px solid #F1F5F9;
+            overflow: hidden;
+        }
+
+        .product-img-wrap img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-img-wrap img {
+            transform: scale(1.05);
+        }
+
+        .product-details {
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .product-cat {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .product-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--navy-primary);
+            margin-bottom: 0.4rem;
+            line-height: 1.35;
+        }
+
+        .product-specs-list {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            background-color: #F8FAFC;
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+
+        .product-specs-list div {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .canteen-stock-status {
+            font-size: 0.72rem;
+            color: var(--success);
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+
+        .pricing-area {
+            margin-top: auto;
+            padding-top: 0.75rem;
+            border-top: 1px dashed var(--border-color);
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+        }
+
+        .market-price {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            text-decoration: line-through;
+        }
+
+        .csd-price {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--olive-accent);
+        }
+
+        .savings-badge {
+            font-size: 0.68rem;
+            background: #DEF7EC;
+            color: #03543F;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .product-card .btn {
+            width: 100%;
+            margin-top: 0.85rem;
+        }
+
+        /* TRIBUTE HERO SECTION */
+        .tribute-hero {
+            background: linear-gradient(135deg, var(--navy-primary) 0%, var(--navy-secondary) 100%);
+            border-radius: 12px;
+            color: var(--white);
+            padding: 2.5rem;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid var(--gold-primary);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .tribute-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 100%;
+            background: radial-gradient(circle, rgba(197, 155, 39, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .tribute-content {
+            max-width: 800px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .tribute-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 153, 51, 0.15);
+            color: var(--saffron);
+            padding: 0.35rem 0.85rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255, 153, 51, 0.3);
+        }
+
+        .tribute-hero h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            color: var(--gold-bright);
+            margin-bottom: 0.75rem;
+            letter-spacing: 0.5px;
+        }
+
+        .tribute-hero p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #CBD5E1;
+            margin-bottom: 1.5rem;
+        }
+
+        .tribute-quote {
+            border-left: 3px solid var(--saffron);
+            padding-left: 1rem;
+            font-style: italic;
+            color: var(--white);
+            font-size: 0.9rem;
+        }
+
+        /* -------------------------------------------------------------
+           4. MODAL WINDOWS (CANTEEN SELECTOR & CART DRAWER)
+        ------------------------------------------------------------- */
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 17, 40, 0.75);
+            backdrop-filter: blur(4px);
+            z-index: 1050;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-backdrop.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-box {
+            background-color: var(--white);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 650px;
+            max-height: 85vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+        }
+
+        .modal-header {
+            padding: 1.25rem;
+            background-color: var(--navy-primary);
+            color: var(--white);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            color: var(--gold-bright);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .close-modal {
+            background: transparent;
+            border: none;
+            color: var(--white);
+            font-size: 1.25rem;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 1.25rem;
+            overflow-y: auto;
+        }
+
+        .canteen-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .canteen-item-card {
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .canteen-item-card:hover, .canteen-item-card.selected {
+            border-color: var(--olive-accent);
+            background-color: #F4F7F3;
+        }
+
+        .canteen-item-card.selected {
+            box-shadow: 0 0 0 2px var(--olive-accent);
+        }
+
+        .canteen-meta h5 {
+            font-size: 0.95rem;
+            color: var(--navy-primary);
+            margin-bottom: 0.2rem;
+        }
+
+        .canteen-meta p {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        /* CART DRAWER */
+        .cart-drawer {
+            position: fixed;
+            top: 0;
+            right: -420px;
+            width: 100%;
+            max-width: 420px;
+            height: 100%;
+            background-color: var(--white);
+            z-index: 1100;
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.2);
+            transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-drawer.active {
+            right: 0;
+        }
+
+        .cart-header {
+            background-color: var(--navy-primary);
+            color: var(--white);
+            padding: 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-items-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.25rem;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 1rem;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .cart-item-img {
+            width: 65px;
+            height: 65px;
+            background-color: #F8FAFC;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.25rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .cart-item-img img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-info h5 {
+            font-size: 0.85rem;
+            color: var(--navy-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .cart-item-info .qty-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .qty-btn {
+            width: 22px;
+            height: 22px;
+            border: 1px solid var(--border-color);
+            background: var(--white);
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .cart-footer {
+            padding: 1.25rem;
+            background-color: var(--khaki-light);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-row.total {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--navy-primary);
+            border-top: 1px solid #CBD5E1;
+            padding-top: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .tax-savings-banner {
+            background-color: #DEF7EC;
+            color: #03543F;
+            font-size: 0.75rem;
+            padding: 0.5rem;
+            border-radius: 4px;
+            text-align: center;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        /* FOOTER & SOCIAL HANDLES */
+        footer {
+            background-color: var(--navy-primary);
+            color: var(--white);
+            padding: 3.5rem 2rem 1.5rem;
+            margin-top: auto;
+            border-top: 4px solid var(--gold-primary);
+        }
+
+        .footer-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .footer-col h4 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold-bright);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-col p {
+            font-size: 0.82rem;
+            color: #94A3B8;
+            line-height: 1.6;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-col ul li a {
+            color: #94A3B8;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--white);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .social-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .social-icon:hover {
+            background: var(--gold-primary);
+            color: var(--navy-primary);
+            transform: translateY(-2px);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            font-size: 0.78rem;
+            color: #64748B;
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 900px) {
+            .header-container {
+                flex-wrap: wrap;
+            }
+            .search-box {
+                order: 3;
+                max-width: 100%;
+                margin-top: 0.5rem;
+            }
+            .top-bar {
+                display: none;
+            }
+            .tribute-hero {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SVG Emblem Helper Definitions -->
+    <svg style="display: none;">
+        <!-- Indian Tri-Services Insignia Vector -->
+        <g id="tri-services-emblem">
+            <circle cx="24" cy="24" r="22" fill="#0A1128" stroke="#C59B27" stroke-width="2"/>
+            <!-- Anchor for Navy -->
+            <path d="M24 10v20M17 26c0 4 3.1 7 7 7s7-3 7-7" stroke="#F59E0B" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+            <!-- Swords for Army -->
+            <path d="M14 14l20 20M34 14L14 34" stroke="#C59B27" stroke-width="2" stroke-linecap="round"/>
+            <!-- Wings for Air Force -->
+            <path d="M10 20c7-3 14-3 14 0c0-3 7-3 14 0" fill="none" stroke="#60A5FA" stroke-width="2"/>
+            <circle cx="24" cy="24" r="3" fill="#FF9933"/>
+        </g>
+        <!-- Indian Flag Vector -->
+        <g id="indian-flag-svg">
+            <rect width="30" height="7" y="0" fill="#FF9933"/>
+            <rect width="30" height="7" y="7" fill="#FFFFFF"/>
+            <rect width="30" height="7" y="14" fill="#138808"/>
+            <circle cx="15" cy="10.5" r="2.5" fill="none" stroke="#000080" stroke-width="0.5"/>
+        </g>
+    </svg>
+
+    <!-- ===================================================================
+         1. AUTHENTICATION OVERLAY (Service ID + OTP Login Simulation)
+    ==================================================================== -->
+    <div id="auth-overlay">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="auth-logo-badge">
+                    <svg width="48" height="48" viewBox="0 0 48 48"><use href="#tri-services-emblem"/></svg>
+                    <svg class="flag-icon" viewBox="0 0 30 21" style="width:36px; height:24px;"><use href="#indian-flag-svg"/></svg>
+                </div>
+                <h2>CSD CANTEEN PORTAL</h2>
+                <p>Canteen Stores Department • Ministry of Defence, Govt of India</p>
+            </div>
+            
+            <div class="auth-body">
+                <!-- Step 1: ID Card Input -->
+                <div id="auth-step-1">
+                    <div style="text-align: center; margin-bottom: 1.5rem;">
+                        <span class="badge badge-gold"><i class="fa-solid fa-shield-halved"></i> Official Defense Authentication</span>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">
+                            Enter Smart Card / Service ID to access subsidized inventory & canteen quotas.
+                        </p>
+                    </div>
+
+                    <form id="form-service-id" onsubmit="handleSendOTP(event)">
+                        <div class="form-group">
+                            <label for="service-id">Service Number / Defense Smart Card No.</label>
+                            <div class="input-with-icon">
+                                <i class="fa-solid fa-id-card"></i>
+                                <input type="text" id="service-id" class="form-control" placeholder="e.g. JC-489012W or 14890211L" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="category-select">Defense Force Branch</label>
+                            <div class="input-with-icon">
+                                <i class="fa-solid fa-building-columns"></i>
+                                <select id="category-select" class="form-control" style="padding-left: 2.5rem;" required>
+                                    <option value="">Select Service Branch</option>
+                                    <option value="army" selected>Indian Army</option>
+                                    <option value="navy">Indian Navy</option>
+                                    <option value="airforce">Indian Air Force</option>
+                                    <option value="coastguard">Indian Coast Guard</option>
+                                    <option value="veterans">Ex-Servicemen / Veteran (ESM)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.8rem;">
+                            Send OTP Code <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Step 2: OTP Entry -->
+                <div id="auth-step-2" style="display: none;">
+                    <div style="text-align: center; margin-bottom: 1.5rem;">
+                        <span class="badge badge-olive"><i class="fa-solid fa-mobile-screen"></i> Verification Code Sent</span>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">
+                            Enter 4-digit OTP sent to registered mobile linked with <strong id="display-card-no" class="text-olive">JC-489012W</strong>.
+                        </p>
+                    </div>
+
+                    <form id="form-otp" onsubmit="handleVerifyOTP(event)">
+                        <div class="form-group">
+                            <label style="text-align: center;">Security OTP Code</label>
+                            <div class="otp-inputs">
+                                <input type="text" maxlength="1" class="otp-digit form-control" value="7" required>
+                                <input type="text" maxlength="1" class="otp-digit form-control" value="3" required>
+                                <input type="text" maxlength="1" class="otp-digit form-control" value="9" required>
+                                <input type="text" maxlength="1" class="otp-digit form-control" value="1" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-gold" style="width: 100%; padding: 0.8rem; margin-top: 1rem;">
+                            Verify & Access CSD Canteen <i class="fa-solid fa-lock-open"></i>
+                        </button>
+
+                        <div style="text-align: center; margin-top: 1rem;">
+                            <a href="#" onclick="resetAuthStep()" style="font-size: 0.78rem; color: var(--text-muted); text-decoration: none;">
+                                <i class="fa-solid fa-chevron-left"></i> Change Service Number
+                            </a>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+            <div class="auth-footer">
+                <i class="fa-solid fa-shield"></i> Official Ministry of Defence CSD Portal. Restricted for Armed Forces personnel only.
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================================================================
+         2. TOP ANNOUNCEMENT BAR & MAIN NAV
+    ==================================================================== -->
+    <div class="top-bar">
+        <div class="top-bar-notice">
+            <svg class="flag-icon" viewBox="0 0 30 21"><use href="#indian-flag-svg"/></svg>
+            <span><strong>Jai Hind:</strong> Welcome to the Canteen Stores Department (CSD) Online Portal. Service to Armed Forces Personnel.</span>
+        </div>
+        <div class="top-bar-links">
+            <a href="#tribute-section"><i class="fa-solid fa-award"></i> Soldier Tribute</a>
+            <a href="#"><i class="fa-solid fa-headset"></i> Helpline: 1800-11-273D</a>
+            <a href="#"><i class="fa-solid fa-file-contract"></i> Entitlement Rules</a>
+        </div>
+    </div>
+
+    <header class="main-header">
+        <div class="header-container">
+            <!-- Brand -->
+            <a href="#" class="brand-logo">
+                <svg class="emblem-svg" viewBox="0 0 48 48"><use href="#tri-services-emblem"/></svg>
+                <div class="brand-text">
+                    <h1>CSD CANTEEN</h1>
+                    <span>Canteen Stores Department • Govt of India</span>
+                </div>
+            </a>
+
+            <!-- Nearest Canteen Selector Trigger -->
+            <div class="canteen-selector-trigger" onclick="openCanteenModal()">
+                <i class="fa-solid fa-store text-gold" style="font-size: 1.2rem;"></i>
+                <div class="canteen-info-text">
+                    <small>Selected Station URC</small>
+                    <strong id="active-canteen-name">Delhi Cantt URC #104 <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem;"></i></strong>
+                </div>
+            </div>
+
+            <!-- Search -->
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Search groceries, spirits, Royal Enfield bikes, SUV CSD prices...">
+            </div>
+
+            <!-- Profile & Cart Controls -->
+            <div class="user-actions">
+                <div class="user-badge-profile">
+                    <div class="avatar">RS</div>
+                    <div class="user-details">
+                        <span>Subedar Major R. Singh</span>
+                        <small>Indian Army • Active Service</small>
+                    </div>
+                </div>
+
+                <div class="cart-trigger" onclick="toggleCartDrawer()">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <div class="cart-badge" id="cart-count">2</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- CATEGORY NAVIGATION BANNER -->
+    <nav class="category-bar">
+        <div class="category-container">
+            <div class="cat-item active" onclick="filterCategory('all', this)">
+                <i class="fa-solid fa-grip"></i> All Inventory
+            </div>
+            <div class="cat-item" onclick="filterCategory('grocery', this)">
+                <i class="fa-solid fa-basket-shopping"></i> Rations & Groceries
+            </div>
+            <div class="cat-item" onclick="filterCategory('kitchen', this)">
+                <i class="fa-solid fa-kitchen-set"></i> Kitchenware & Utensils
+            </div>
+            <div class="cat-item" onclick="filterCategory('liquor', this)">
+                <i class="fa-solid fa-wine-bottle"></i> Spirits & Beverages (Quota)
+            </div>
+            <div class="cat-item" onclick="filterCategory('two-wheeler', this)">
+                <i class="fa-solid fa-motorcycle"></i> Two-Wheelers (AFD-I)
+            </div>
+            <div class="cat-item" onclick="filterCategory('four-wheeler', this)">
+                <i class="fa-solid fa-car-side"></i> Four-Wheelers / Cars
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===================================================================
+         3. MAIN STOREFRONT CONTENT WITH DEDICATED SECTIONS
+    ==================================================================== -->
+    <main class="main-layout">
+
+        <!-- Selected Canteen Info Banner -->
+        <div class="canteen-status-banner">
+            <div class="banner-meta">
+                <div class="banner-meta-icon">
+                    <i class="fa-solid fa-building-flag"></i>
+                </div>
+                <div class="banner-meta-details">
+                    <h3>
+                        <span id="banner-canteen-title">Delhi Cantonment Central Depot (URC #104)</span>
+                        <span class="badge badge-olive">Smart Token Active</span>
+                    </h3>
+                    <p id="banner-canteen-address"><i class="fa-solid fa-location-dot"></i> Sadar Bazaar Road, Delhi Cantt, New Delhi • Open: 09:00 AM - 05:30 PM</p>
+                </div>
+            </div>
+            <div class="banner-stats">
+                <div class="stat-chip">
+                    <span>Stock Status</span>
+                    <strong class="text-gold">96% Stocked</strong>
+                </div>
+                <div class="stat-chip">
+                    <span>AFD-I Vehicle Window</span>
+                    <strong>Active Booking</strong>
+                </div>
+                <button class="btn btn-outline btn-sm" style="color: white; border-color: rgba(255,255,255,0.3);" onclick="openCanteenModal()">
+                    <i class="fa-solid fa-map-pin"></i> Change Canteen
+                </button>
+            </div>
+        </div>
+
+        <!-- Monthly Quota Eligibility Tracker -->
+        <section class="quota-tracker-card">
+            <div class="tracker-header">
+                <h4><i class="fa-solid fa-chart-pie text-gold"></i> Subsidized Entitlement & Monthly Quota (Rank: JCO / Subedar Major)</h4>
+                <span class="badge badge-navy">Resetting in 12 Days</span>
+            </div>
+            <div class="quota-grid">
+                <!-- Liquor Quota -->
+                <div class="quota-box">
+                    <div class="quota-title">
+                        <span>Liquor Allowance (Spirit/Rum)</span>
+                        <strong class="text-olive">4 / 6 Bottles Remaining</strong>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" style="width: 66%;"></div>
+                    </div>
+                    <div class="quota-note">
+                        <span>2 Purchased this month</span>
+                        <span>Max 6 Bottles / Mo</span>
+                    </div>
+                </div>
+
+                <!-- Grocery Allowance -->
+                <div class="quota-box">
+                    <div class="quota-title">
+                        <span>Grocery Subsidized Limit</span>
+                        <strong class="text-olive">₹4,200 / ₹6,000 Remaining</strong>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" style="width: 70%;"></div>
+                    </div>
+                    <div class="quota-note">
+                        <span>₹1,800 spent</span>
+                        <span>50% GST Exemption</span>
+                    </div>
+                </div>
+
+                <!-- AFD-I Car Eligibility -->
+                <div class="quota-box">
+                    <div class="quota-title">
+                        <span>AFD-I Car Purchase Eligibility</span>
+                        <strong class="text-gold">ELIGIBLE NOW</strong>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill bg-gold" style="width: 100%;"></div>
+                    </div>
+                    <div class="quota-note">
+                        <span>Frequency: Every 8 Years</span>
+                        <span>Max ₹12.0 Lakh CSD Ex-Showroom</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =============================================================
+             DEDICATED SECTION 1: GROCERIES & RATIONS
+        ============================================================= -->
+        <div class="category-section-title" id="sec-grocery">
+            <h3><i class="fa-solid fa-basket-shopping text-gold"></i> Groceries & Daily Essential Rations</h3>
+            <span class="badge badge-olive">CSD Subsidized Grocery Quota</span>
+        </div>
+        <div class="products-grid">
+            
+            <!-- Item 1 -->
+            <div class="product-card" data-category="grocery">
+                <span class="badge badge-navy product-tag">CSD Index #G4012</span>
+                <div class="product-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=600&q=80" alt="Fortune Mustard Oil">
+                </div>
+                <div class="product-details">
+                    <span class="product-cat">Cooking Oils</span>
+                    <h4 class="product-title">Fortune Kachi Ghani Pure Mustard Oil (5 Ltr Jar)</h4>
+                    <div class="product-specs-list">
+                        <div><span>Pack Size:</span> <strong>5 Litre Can</strong></div>
+                        <div><span>Eligibility:</span> <strong>All Ranks (Officers/JCOs/ORs)</strong></div>
+                    </div>
+                    <div class="canteen-stock-status">
+                        <i class="fa-solid fa-circle-check"></i> Stock: Available at Delhi Cantt URC
+                    </div>
+                    <div class="pricing-area">
+                        <div>
+                            <div class="market-price">MRP ₹960.00</div>
+                            <div class="csd-price">₹620.00</div>
+                        </div>
+                        <span class="savings-badge">Save ₹340</span>
+                    </div>
+                    <button class="btn btn-primary" onclick="addToCart('Fortune Mustard Oil 5L', 620, 'grocery', 'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=300&q=80')">
+                        <i class="fa-solid fa-cart-plus"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="product-card" data-category="grocery">
+                <span class="badge badge-navy product-tag">CSD Index #G1109</span>
+                <div class="product-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=600&q=80" alt="Basmati Rice">
+                </div>
+                <div class="product-details">
+                    <span class="product-cat">Grains & Rice</span>
+                    <h4 class="product-title">India Gate Premium Basmati Rice (10 Bag)</h4>
+                    <div class="product-specs-list">
+                        <div><span>Grain Type:</span> <strong>Aged Long Grain Basmati</strong></div>
+                        <div><span>Max Quota:</span> <strong>2 Bags / Month</strong></div>
+                    </div>
+                    <div class="canteen-stock-status">
+                        <i class="fa-solid fa-circle-check"></i> Stock: 68 bags left
+                    </div>
+                    <div class="pricing-area">
+                        <div>
+                            <div class="market-price">MRP ₹1,450.00</div>
+                            <div class="csd-price">₹890.00</div>
+                        </div>
+                        <span class="savings-badge">Save ₹560</span>
+                    </div>
+                    <button class="btn btn-primary" onclick="addToCart('India Gate Basmati Rice 10kg', 890, 'grocery', 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=300&q=80')">
+                        <i class="fa-solid fa-cart-plus"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="product-card" data-category="grocery">
+                <span class="badge badge-navy product-tag">CSD Index #G8820</span>
+                <div class="product-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=600&q=80" alt="Tea Bag">
+                </div>
+                <div class="product-details">
+                    <span class="product-cat">Beverages & Tea</span>
+                    <h4 class="product-title">Taj Mahal Premium Leaf Tea (1kg Pack)</h4>
+                    <div class="product-specs-list">
+                        <div><span>Origin:</span> <strong>Assam Gardens</strong></div>
+                        <div><span>Grade:</span> <strong>Superfine Leaf</strong></div>
+                    </div>
+                    <div class="canteen-stock-status">
+                        <i class="fa-solid fa-circle-check"></i> Stock: In Stock
+                    </div>
+                    <div class="pricing-area">
+                        <div>
+                            <div class="market-price">MRP ₹720.00</div>
+                            <div class="csd-price">₹450.00</div>
+                        </div>
+                        <span class="savings-badge">Save ₹270</span>
+                    </div>
+                    <button class="btn btn-primary" onclick="addToCart('Taj Mahal Tea 1kg', 450, 'grocery', 'https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=300&q=80')">
+                        <i class="fa-solid fa-cart-plus"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- =============================================================
+             DEDICATED SECTION 2: KITCHENWARE & UTENSILS
+        ============================================================= -->
+        <div class="category-section-title" id="sec-kitchen">
+            <h3><i class="fa-solid fa-kitchen-set text-gold"></i> Kitchenware, Utensils & Home Appliances</h3>
+            <span class="badge badge-gold">Subsidized Household Items</span>
+        </div>
+        <div class="products-grid">
+            
+            <!-- Utensil 1 -->
+            <div class="product-card" data-category="kitchen">
+                <span class="badge badge-navy product-tag">CSD Index #K3340</span>
+                <div class="product-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&w=600&q=80" alt="Pressure Cooker">
+                </div>
+                <div class="product-details">
+                    <span class="product-cat">Cookware</span>
+                    <h4 class="product-title">Hawkins Contura Stainless Steel Cooker (5 Litre)</h4>
+                    <div class="product-specs-list">
+                        <div><span>Material:</span> <strong>18/8 Stainless Steel</strong></div>
+                        <div><span>Warranty:</span> <strong>5 Years Official Warranty</strong></div>
+                    </div>
+                    <div class="canteen-stock-status">
+                        <i class="fa-solid fa-circle-check"></i> Ready for Pickup
+                    </div>
+                    <div class="pricing-area">
+                        <div>
+                            <div class="market-price">MRP ₹3,200.00</div>
+                            <div class="csd-price">₹1,980.00</div>
+                        </div>
+                        <span class="savings-badge">Save ₹1,220</span>
+                    </div>
+                    <button class="btn btn-primary" onclick="addToCart('Hawkins SS Cooker 5L', 1980, 'kitchen', 'https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&w=300&q=80')">
+                        <i class="fa-solid fa-cart-plus"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Utensil 2 -->
+            <div class="product-card" data-category="kitchen">
+                <span class="badge badge-navy product-tag">CSD Index #K7712</span>
+                <div class="product-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=600&q=80" alt="Dinner Set">
+                </div>
+                <div class="product-details">
+                    <span class="product-cat">Dinnerware</span>
+                    <h4 class="product-title">Larayware Opalware 33-Piece Dinner Set (Golden Flora)</h4>
+                    <div class="product-specs-list">
+                        <div><span>Pieces:</span> <strong>33-Pcs Set (Serves 6)</strong></div>
+                        <div><span>Feature:</span> <strong>Microwave & Dishwasher Safe</strong></div>
+                    </div>
+                    <div class="canteen-stock-status">
+                        <i class="fa-solid fa-circle-check"></i> Stock: 14 sets available
+                    </div>
+                    <div class="pricing-area">
+                        <div>
+                            <div class="market-price">MRP ₹4,500.00</div>
+                            <div class="csd-price">₹2,650.00</div>
+                        </div>
+                        <span class="savings-badge">Save 41%</span>
+                    </div>
+                    <button class="btn btn-primary" onclick="addToCart('Larayware 33-Pc Dinner Set', 2650, 'kitchen', 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=300&q=80')">
+                        <i class="fa-solid fa-cart-plus"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- =============================================================
+             DEDICATED SECTION 3: SPIRITS & BEVERAGES (QUOTA)
+        ============================================================= -->
+        <div class="category-section-title" id="sec-liquor">
+            <h3><i class="fa-solid fa-wine-bottle text-gold"></i> Defense Personnel Spirits & Beverages</h3>
+            <span class="badge badge-saffron"><i class="fa-solid fa-lock"></i> Mandatory Smart Card Validation</span>
+        </div>
+        <div class="products-grid">
+            
+            <!-- Liquor 1 -->
+            <div class="product-card" data-category="liquor">
+                <span class="badge badge-gold product-tag">Quota: 1 Bottle</span>
+                <div class="product-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1527281400683-1aae777175f8?auto=format&fit=crop&w=600&q=80" alt="Old Monk Rum Bottle">
+                </div>
+                <div class="product-details">
+                    <span class="product-cat">Rum & Spirits</span>
+                    <h4 class="product-title">Old Monk XXX Very Old Vatted Dark Rum (750ml)</h4>
+                    <div class="product-specs-list">
+                        <div><span>Index No:</span> <strong>L-10294</strong></div>
+                        <div><span>Volume:</span> <strong>750ml Glass Bottle</strong></div>
+                    </div>
+                    <div class="canteen-stock-status">
+                        <i class="fa-solid fa-circle-check"></i> In Stock at Delhi Cantt
+                    </div>
+                    <div class="pricing-area">
+                        <div>
+                            <div class="market-price">Civil Price ₹750</div>
+                            <div class="csd-price">₹340.00</div>
+                        </div>
+                        <span class="savings-badge">54% Rebate</span>
+                    </div>
+                    <button class="btn btn-primary" onclick="addToCart('Old Monk XXX Dark Rum 750ml', 340, 'liquor', 'https://images.unsplash.com/photo-1527281400683-1aae777175f8?auto=format&fit=crop&w=300&q=80')">
+                        <i class="fa-solid fa-cart-plus"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Liquor 2 -->
+            <div class="product-card" data-category="liquor">
+                <span class="badge badge-gold product-tag">Quota: 1 Bottle</span>
+                <div class="product-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=600&q=80" alt="Blenders Pride Whisky">
+                </div>
+                <div class="product-details">
+                    <span class="product-cat">Whisky</span>
+                    <h4 class="product-title">Blenders Pride Ultra Premium Rare Whisky (750ml)</h4>
+                    <div class="product-specs-list">
+                        <div><span>Index No:</span> <strong>L-40912</strong></div>
+                        <div><span>Blend:</span> <strong>Scotch Malts & Indian Grain</strong></div>
+                    </div>
+                    <div class="canteen-stock-status">
+                        <i class="fa-solid fa-circle-check"></i> Stock: Available
+                    </div>
+                    <div class="pricing-area">
+                        <div>
+                            <div class="market-price">Civil Price ₹1,100</div>
+                            <div class="csd-price">₹560.00</div>
+                        </div>
+                        <span class="savings-badge">49% Rebate</span>
+                    </div>
+                    <button class="btn btn-primary" onclick="addToCart('Blenders Pride Ultra 750ml', 560, 'liquor', 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=300&q=80')">
+                        <i class="fa-solid fa-cart-plus"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Liquor 3 -->
+            <div class="product-card" data-category="liquor">
+                <span class="badge badge-gold product-tag">Quota: 1 Bottle</span>
+                <div class="product-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&w=600&q=80" alt="Scotch Whisky">
+                </div>
+                <div class="product-details">
+                    <span class="product-cat">Imported Scotch</span>
+                    <h4 class="product-title">Johnnie Walker Red Label Blended Scotch (750ml)</h4>
+                    <div class="product-specs-list">
+                        <div><span>Index No:</span> <strong>L-90122</strong></div>
+                        <div><span>Entitlement:</span> <strong>Officers / JCOs Quota</strong></div>
+                    </div>
+                    <div class="canteen-stock-status">
+                        <i class="fa-solid fa-circle-check"></i> Reserved Allocation
+                    </div>
+                    <div class="pricing-area">
+                        <div>
+                            <div class="market-price">Civil Price ₹2,400</div>
+                            <div class="csd-price">₹1,280.00</div>
+                        </div>
+                        <span class="savings-badge">Save ₹1,120</span>
+                    </div>
+                    <button class="btn btn-primary" onclick="addToCart('Johnnie Walker Red Label', 1280, 'liquor', 'https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&w=300&q=80')">
+                        <i class="fa-solid fa-cart-plus"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- =============================================================
+             DEDICATED SECTION 4: TWO-WHEELERS (AFD-I ITEMS)
+        ============================================================= -->
+        <div class="category-section-title" id="sec-two-wheeler">
+            <h3><i class="fa-solid fa-motorcycle text-gold"></i> Two-Wheelers & Motorcycles (AFD-I Booking)</h3>
+            <span class="badge badge-olive">CSD Portal Direct Booking</span>
+        </div>
+        <div class="products-grid">
+            
+            <!-- Two Wheeler 1 -->
+            <div class="product-card" data-category="two-wheeler">
+                <span class="badge badge-olive product-tag">AFD-I Index #AFD-M88</span>
+                <div class="product-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=600&q=80" alt="Royal Enfield Motorcycle">
+                </div>
+                <div class="product-details">
+                    <span class="product-cat">Royal Enfield</span>
+                    <h4 class="product-title">Royal Enfield Classic 350 (Dark Stealth Black)</h4>
+                    <div class="product-specs-list">
+                        <div><span>Engine:</span> <strong>349cc J-Series Single Cyl</strong></div>
+                        <div><span>Delivery:</span> <strong>Direct Dealer Pick-Up</strong></div>
+                        <div><span>Eligibility:</span> <strong>All Serving & Retired ESM</strong></div>
+                    </div>
+                    <div class="canteen-stock-status">
+                        <i class="fa-solid fa-circle-check"></i> AFD Booking Window Active
+                    </div>
+                    <div class="pricing-area">
+                        <div>
+                            <div class="market-price">Ex-Showroom ₹2,25,000</div>
+                            <div class="csd-price">₹1,84,200</div>
+                        </div>
+                        <span class="savings-badge">Save ₹40.8k</span>
+                    </div>
+                    <button class="btn btn-gold" onclick="addToCart('Royal Enfield Classic 350', 184200, 'afd', 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=300&q=80')">
+                        <i class="fa-solid fa-file-signature"></i> Book AFD Slot
+                    </button>
+                </div>
+            </div>
+
+            <!-- Two Wheeler 2 -->
+            <div class="product-card" data-category="two-wheeler">
+                <span class="badge badge-olive product-tag">AFD-I Index #AFD-M12</span>
+                <div class="product-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&w=600&q=80" alt="Honda Scooter">
+                </div>
+                <div class="product-details">
+                    <span class="product-cat">Scooters</span>
+                    <h4 class="product-title">Honda Activa 6G DLX (Matte Axis Grey)</h4>
+                    <div class="product-specs-list">
+                        <div><span>Engine:</span> <strong>109.51cc PGM-FI</strong></div>
+                        <div><span>BS-VI:</span> <strong>OBD-2 Compliant</strong></div>
+                    </div>
+                    <div class="canteen-stock-status">
+                        <i class="fa-solid fa-circle-check"></i> Stock: Available at Station Dealer
+                    </div>
+                    <div class="pricing-area">
+                        <div>
+                            <div class="market-price">Ex-Showroom ₹82,000</div>
+                            <div class="csd-price">₹68,500</div>
+                        </div>
+                        <span class="savings-badge">Save ₹13.5k</span>
+                    </div>
+                    <button class="btn btn-gold" onclick="addToCart('Honda Activa 6G DLX', 68500, 'afd', 'https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&w=300&q=80')">
+                        <i class="fa-solid fa-file-signature"></i> Book AFD Slot
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- =============================================================
+             DEDICATED SECTION 5: FOUR-WHEELERS / CARS
+        ============================================================= -->
+        <div class="category-section-title" id="sec-four-wheeler">
+            <h3><i class="fa-solid fa-car-side text-gold"></i> Four-Wheelers / Automobiles (AFD-I Heavy Purchase)</h3>
+            <span class="badge badge-saffron">Special Subsidized GST Rates</span>
+        </div>
+        <div class="products-grid">
+            
+            <!-- Four Wheeler 1 -->
+            <div class="product-card" data-category="four-wheeler">
+                <span class="badge badge-olive product-tag">CSD Car Code #C8810</span>
+                <div class="product-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=600&q=80" alt="Tata Nexon SUV">
+                </div>
+                <div class="product-details">
+                    <span class="product-cat">Compact SUV</span>
+                    <h4 class="product-title">Tata Nexon Fearless Dual-Tone 1.2L Petrol</h4>
+                    <div class="product-specs-list">
+                        <div><span>Safety Rating:</span> <strong>5-Star GNCAP</strong></div>
+                        <div><span>Engine:</span> <strong>1199cc Turbocharged</strong></div>
+                        <div><span>Limit:</span> <strong>Upto ₹12 Lakh CSD Ex-Showroom</strong></div>
+                    </div>
+                    <div class="canteen-stock-status">
+                        <i class="fa-solid fa-circle-check"></i> Quota Eligibility Confirmed
+                    </div>
+                    <div class="pricing-area">
+                        <div>
+                            <div class="market-price">Civil Price ₹12,80,000</div>
+                            <div class="csd-price">₹10,45,000</div>
+                        </div>
+                        <span class="savings-badge">Save ₹2.35 Lakh</span>
+                    </div>
+                    <button class="btn btn-gold" onclick="addToCart('Tata Nexon Petrol CSD', 1045000, 'afd', 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=300&q=80')">
+                        <i class="fa-solid fa-file-invoice-dollar"></i> Apply AFD-I Demand
+                    </button>
+                </div>
+            </div>
+
+            <!-- Four Wheeler 2 -->
+            <div class="product-card" data-category="four-wheeler">
+                <span class="badge badge-olive product-tag">CSD Car Code #C5501</span>
+                <div class="product-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80" alt="Sedan Car">
+                </div>
+                <div class="product-details">
+                    <span class="product-cat">Sedans</span>
+                    <h4 class="product-title">Hyundai Verna 1.5L Turbo GDi Executive Sedan</h4>
+                    <div class="product-specs-list">
+                        <div><span>Transmission:</span> <strong>6-Speed Manual / DCT</strong></div>
+                        <div><span>CSD Approval:</span> <strong>JCOs & Officers Entitlement</strong></div>
+                    </div>
+                    <div class="canteen-stock-status">
+                        <i class="fa-solid fa-circle-check"></i> Allocation Window Open
+                    </div>
+                    <div class="pricing-area">
+                        <div>
+                            <div class="market-price">Civil Price ₹14,50,000</div>
+                            <div class="csd-price">₹11,90,000</div>
+                        </div>
+                        <span class="savings-badge">Save ₹2.60 Lakh</span>
+                    </div>
+                    <button class="btn btn-gold" onclick="addToCart('Hyundai Verna Turbo CSD', 1190000, 'afd', 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=300&q=80')">
+                        <i class="fa-solid fa-file-invoice-dollar"></i> Apply AFD-I Demand
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- =============================================================
+             TRIBUTE TO SOLDIERS HERO SECTION
+        ============================================================= -->
+        <section class="tribute-hero" id="tribute-section">
+            <div class="tribute-content">
+                <div class="tribute-badge">
+                    <svg class="flag-icon" viewBox="0 0 30 21"><use href="#indian-flag-svg"/></svg>
+                    <span>HONOURING THE DEFENDERS OF THE NATION</span>
+                </div>
+                <h2>A Tribute to Supreme Valor & Unwavering Service</h2>
+                <p>
+                    The Canteen Stores Department (CSD) stands as a proud testament of gratitude to the brave men and women of the Indian Armed Forces. From the frozen heights of Siachen to the burning sands of Thar and the vast blue oceans, our soldiers shield the sovereignty of Bharat. CSD Canteen is committed to ensuring high quality, tax-subsidized essentials and heavy consumer goods reach every serving personnel, veteran, and war widow with dignity and honor.
+                </p>
+                <div class="tribute-quote">
+                    "Our flag does not fly because the wind moves it; it flies with the last breath of each soldier who died protecting it."
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===================================================================
+         4. MODAL: SELECT NEAREST CANTEEN / DEPOT
+    ==================================================================== -->
+    <div class="modal-backdrop" id="canteen-modal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-map-location-dot"></i> Select Station Canteen / Depot (URC)</h3>
+                <button class="close-modal" onclick="closeCanteenModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+                    Selecting your local Unit Run Canteen (URC) ensures live stock validation and slot booking for physical collection.
+                </p>
+
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" class="form-control" placeholder="Search military station, command HQ, or pincode...">
+                    </div>
+                </div>
+
+                <div class="canteen-list">
+                    <!-- Location Option 1 -->
+                    <div class="canteen-item-card selected" onclick="selectCanteen('Delhi Cantonment Central Depot', 'URC #104 • Sadar Bazaar Road, Delhi Cantt', this)">
+                        <div class="canteen-meta">
+                            <h5>Delhi Cantonment Central Depot (URC #104)</h5>
+                            <p><i class="fa-solid fa-location-dot"></i> Sadar Bazaar Road, New Delhi • 2.4 km away</p>
+                            <span class="badge badge-olive" style="margin-top: 0.3rem;">Liquor & AFD Inventory Active</span>
+                        </div>
+                        <i class="fa-solid fa-circle-check text-olive" style="font-size: 1.25rem;"></i>
+                    </div>
+
+                    <!-- Location Option 2 -->
+                    <div class="canteen-item-card" onclick="selectCanteen('Fort William Kolkata URC', 'URC #88 • Command HQ, Kolkata', this)">
+                        <div class="canteen-meta">
+                            <h5>Fort William Kolkata Station Canteen</h5>
+                            <p><i class="fa-solid fa-location-dot"></i> Eastern Command HQ, Kolkata, West Bengal</p>
+                            <span class="badge badge-olive" style="margin-top: 0.3rem;">Full Inventory Available</span>
+                        </div>
+                        <i class="fa-regular fa-circle" style="font-size: 1.25rem; color: #CBD5E1;"></i>
+                    </div>
+
+                    <!-- Location Option 3 -->
+                    <div class="canteen-item-card" onclick="selectCanteen('Pune Southern Command Depot', 'URC #42 • MG Road Camp, Pune', this)">
+                        <div class="canteen-meta">
+                            <h5>Pune Camp Southern Command Depot</h5>
+                            <p><i class="fa-solid fa-location-dot"></i> MG Road Cantonment, Pune, Maharashtra</p>
+                            <span class="badge badge-gold" style="margin-top: 0.3rem;">AFD-I Vehicles Authorized Depot</span>
+                        </div>
+                        <i class="fa-regular fa-circle" style="font-size: 1.25rem; color: #CBD5E1;"></i>
+                    </div>
+
+                    <!-- Location Option 4 -->
+                    <div class="canteen-item-card" onclick="selectCanteen('Mumbai Naval Dockyard URC', 'URC #310 • Lion Gate, Mumbai', this)">
+                        <div class="canteen-meta">
+                            <h5>Mumbai Naval Dockyard Station Canteen</h5>
+                            <p><i class="fa-solid fa-location-dot"></i> Western Naval Command, Lion Gate, Fort, Mumbai</p>
+                            <span class="badge badge-olive" style="margin-top: 0.3rem;">Navy Smart Card Active</span>
+                        </div>
+                        <i class="fa-regular fa-circle" style="font-size: 1.25rem; color: #CBD5E1;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================================================================
+         5. DRAWER: CART & CHECKOUT SUMMARY
+    ==================================================================== -->
+    <div class="cart-drawer" id="cart-drawer">
+        <div class="cart-header">
+            <h3 style="font-size: 1rem; color: var(--gold-bright); font-family: 'Cinzel', serif; display: flex; align-items: center; gap: 0.5rem;">
+                <i class="fa-solid fa-cart-flatbed"></i> CSD Subsidized Cart
+            </h3>
+            <button class="close-modal" onclick="toggleCartDrawer()">&times;</button>
+        </div>
+
+        <div class="cart-items-container" id="cart-items-list">
+            <!-- Cart Item Demo 1 -->
+            <div class="cart-item">
+                <div class="cart-item-img">
+                    <img src="https://images.unsplash.com/photo-1527281400683-1aae777175f8?auto=format&fit=crop&w=200&q=80" alt="Rum">
+                </div>
+                <div class="cart-item-info">
+                    <h5>Old Monk XXX Dark Rum (750ml)</h5>
+                    <div style="font-size: 0.8rem; font-weight: 700; color: var(--olive-accent);">₹340.00</div>
+                    <div class="qty-controls">
+                        <button class="qty-btn">-</button>
+                        <span style="font-size: 0.85rem; font-weight: 600;">1</span>
+                        <button class="qty-btn">+</button>
+                    </div>
+                </div>
+                <i class="fa-solid fa-trash-can" style="color: var(--danger); cursor: pointer; font-size: 0.9rem;" onclick="this.parentElement.remove(); updateCartTotal();"></i>
+            </div>
+
+            <!-- Cart Item Demo 2 -->
+            <div class="cart-item">
+                <div class="cart-item-img">
+                    <img src="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=200&q=80" alt="Oil">
+                </div>
+                <div class="cart-item-info">
+                    <h5>Fortune Mustard Oil (5L)</h5>
+                    <div style="font-size: 0.8rem; font-weight: 700; color: var(--olive-accent);">₹620.00</div>
+                    <div class="qty-controls">
+                        <button class="qty-btn">-</button>
+                        <span style="font-size: 0.85rem; font-weight: 600;">1</span>
+                        <button class="qty-btn">+</button>
+                    </div>
+                </div>
+                <i class="fa-solid fa-trash-can" style="color: var(--danger); cursor: pointer; font-size: 0.9rem;" onclick="this.parentElement.remove(); updateCartTotal();"></i>
+            </div>
+        </div>
+
+        <div class="cart-footer">
+            <div class="tax-savings-banner">
+                <i class="fa-solid fa-piggy-bank"></i> Total Tax Exemption Savings: ₹680.00
+            </div>
+
+            <div class="summary-row">
+                <span>Subtotal (CSD Rates)</span>
+                <span id="summary-subtotal">₹960.00</span>
+            </div>
+            <div class="summary-row">
+                <span>GST Defense Rebate (50%)</span>
+                <span class="text-olive">- ₹240.00</span>
+            </div>
+            <div class="summary-row">
+                <span>URC Service Handling</span>
+                <span>₹15.00</span>
+            </div>
+            <div class="summary-row total">
+                <span>Grand Total</span>
+                <span id="summary-total" class="text-navy">₹735.00</span>
+            </div>
+
+            <button class="btn btn-gold" style="width: 100%; margin-top: 1rem; padding: 0.8rem;" onclick="handleCheckout()">
+                Proceed to Defense Smart Card Pay <i class="fa-solid fa-credit-card"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- ===================================================================
+         FOOTER WITH LEADERSHIP & SOCIAL MEDIA HANDLES
+    ==================================================================== -->
+    <footer>
+        <div class="footer-grid">
+            <!-- Col 1: Purpose & Mission -->
+            <div class="footer-col">
+                <h4><i class="fa-solid fa-shield-halved text-gold"></i> CSD CANTEEN MISSION</h4>
+                <p>
+                    Operated under Quartermaster General's Branch, IHQ of MoD (Army). Dedicated to providing quality consumer products to the Defense Services at uniform subsidized prices across India.
+                </p>
+                <div class="social-links">
+                    <a href="https://twitter.com" target="_blank" class="social-icon" aria-label="X Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="https://facebook.com" target="_blank" class="social-icon" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://youtube.com" target="_blank" class="social-icon" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="https://instagram.com" target="_blank" class="social-icon" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <!-- Col 2: Official Leadership & Nodal Officers -->
+            <div class="footer-col">
+                <h4><i class="fa-solid fa-user-tie text-gold"></i> BOARD LEADERSHIP</h4>
+                <ul style="font-size: 0.82rem; color: #94A3B8;">
+                    <li style="margin-bottom: 0.6rem;">
+                        <strong style="color: var(--white); display: block;">Quartermaster General (QMG)</strong>
+                        <span>Chairman, CSD Board of Control</span>
+                    </li>
+                    <li style="margin-bottom: 0.6rem;">
+                        <strong style="color: var(--white); display: block;">General Manager (CSD)</strong>
+                        <span>Headquarters CSD, Adelphi, Mumbai</span>
+                    </li>
+                    <li>
+                        <strong style="color: var(--white); display: block;">Nodal Secretariat Address</strong>
+                        <span>IHQ of MoD (Army), DHQ PO, New Delhi - 110011</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Col 3: Support & Regulations -->
+            <div class="footer-col">
+                <h4><i class="fa-solid fa-headset text-gold"></i> HELPLINE & SUPPORT</h4>
+                <ul>
+                    <li><a href="#"><i class="fa-solid fa-phone"></i> Toll Free: 1800-11-273D</a></li>
+                    <li><a href="#"><i class="fa-solid fa-envelope"></i> Email: support-csd@gov.in</a></li>
+                    <li><a href="#"><i class="fa-solid fa-file-pdf"></i> AFD-I Online Buying Manual</a></li>
+                    <li><a href="#"><i class="fa-solid fa-id-card"></i> Smart Card Status Check</a></li>
+                </ul>
+            </div>
+
+            <!-- Col 4: Defense Security -->
+            <div class="footer-col">
+                <h4><i class="fa-solid fa-lock text-gold"></i> SECURITY PORTAL</h4>
+                <p style="margin-bottom: 0.75rem;">
+                    Access restricted exclusively to Armed Forces Personnel (Army, Navy, Air Force, Coast Guard) & ESM.
+                </p>
+                <span class="badge badge-gold"><i class="fa-solid fa-shield"></i> Govt Encrypted Portal</span>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <svg class="flag-icon" viewBox="0 0 30 21"><use href="#indian-flag-svg"/></svg>
+                <span>&copy; 2026 Canteen Stores Department (CSD), Ministry of Defence, Government of India.</span>
+            </div>
+            <div>
+                Designed in Tribute to the Valor of Indian Armed Forces.
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===================================================================
+         6. JAVASCRIPT LOGIC
+    ==================================================================== -->
+    <script>
+        // Authentication Step 1 -> Step 2
+        function handleSendOTP(event) {
+            event.preventDefault();
+            const serviceIdInput = document.getElementById('service-id').value;
+            if(serviceIdInput) {
+                document.getElementById('display-card-no').innerText = serviceIdInput.toUpperCase();
+                document.getElementById('auth-step-1').style.display = 'none';
+                document.getElementById('auth-step-2').style.display = 'block';
+            }
+        }
+
+        // Reset Auth Step back to ID
+        function resetAuthStep() {
+            document.getElementById('auth-step-2').style.display = 'none';
+            document.getElementById('auth-step-1').style.display = 'block';
+        }
+
+        // Verify OTP and Unlock Website
+        function handleVerifyOTP(event) {
+            event.preventDefault();
+            const overlay = document.getElementById('auth-overlay');
+            overlay.style.opacity = '0';
+            overlay.style.transition = 'opacity 0.4s ease';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 400);
+        }
+
+        // Canteen Modal Toggles
+        function openCanteenModal() {
+            document.getElementById('canteen-modal').classList.add('active');
+        }
+
+        function closeCanteenModal() {
+            document.getElementById('canteen-modal').classList.remove('active');
+        }
+
+        // Select Canteen Location
+        function selectCanteen(name, address, element) {
+            document.querySelectorAll('.canteen-item-card').forEach(card => {
+                card.classList.remove('selected');
+                const icon = card.querySelector('.fa-circle-check');
+                if(icon) {
+                    icon.className = 'fa-regular fa-circle';
+                    icon.style.color = '#CBD5E1';
+                }
+            });
+
+            element.classList.add('selected');
+            const currentIcon = element.querySelector('.fa-circle, .fa-circle-check');
+            if(currentIcon) {
+                currentIcon.className = 'fa-solid fa-circle-check text-olive';
+                currentIcon.style.color = '';
+            }
+
+            document.getElementById('active-canteen-name').innerHTML = `${name} <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem;"></i>`;
+            document.getElementById('banner-canteen-title').innerText = name;
+            document.getElementById('banner-canteen-address').innerHTML = `<i class="fa-solid fa-location-dot"></i> ${address}`;
+
+            closeCanteenModal();
+        }
+
+        // Cart Drawer Toggles
+        function toggleCartDrawer() {
+            const drawer = document.getElementById('cart-drawer');
+            drawer.classList.toggle('active');
+        }
+
+        // Category Filter & Section Scrolling
+        function filterCategory(category, element) {
+            document.querySelectorAll('.cat-item').forEach(item => item.classList.remove('active'));
+            element.classList.add('active');
+
+            const cards = document.querySelectorAll('.product-card');
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            if(category !== 'all') {
+                const targetSec = document.getElementById(`sec-${category}`);
+                if(targetSec) {
+                    targetSec.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        }
+
+        // Add to Cart Simulation
+        let currentCartCount = 2;
+        function addToCart(title, price, type, imgUrl) {
+            currentCartCount++;
+            document.getElementById('cart-count').innerText = currentCartCount;
+
+            const list = document.getElementById('cart-items-list');
+            const newItem = document.createElement('div');
+            newItem.className = 'cart-item';
+            
+            newItem.innerHTML = `
+                <div class="cart-item-img">
+                    <img src="${imgUrl}" alt="${title}">
+                </div>
+                <div class="cart-item-info">
+                    <h5>${title}</h5>
+                    <div style="font-size: 0.8rem; font-weight: 700; color: var(--olive-accent);">₹${price.toLocaleString()}</div>
+                    <div class="qty-controls">
+                        <button class="qty-btn">-</button>
+                        <span style="font-size: 0.85rem; font-weight: 600;">1</span>
+                        <button class="qty-btn">+</button>
+                    </div>
+                </div>
+                <i class="fa-solid fa-trash-can" style="color: var(--danger); cursor: pointer; font-size: 0.9rem;" onclick="this.parentElement.remove();"></i>
+            `;
+
+            list.appendChild(newItem);
+            toggleCartDrawer();
+        }
+
+        // Checkout simulation
+        function handleCheckout() {
+            alert("Smart Card Authentication Verified! Pickup token generated for collection at selected Unit Run Canteen.");
+            toggleCartDrawer();
+        }
+    </script>
+</body>
+</html>
